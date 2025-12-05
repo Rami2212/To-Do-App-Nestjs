@@ -36,4 +36,13 @@ export class TodosService {
         todo.isCompleted = !todo.isCompleted;
         return this.todoRepository.save(todo);
     }
+
+    // Delete todo
+    async delete(id: string): Promise<void> {
+        const result = await this.todoRepository.delete(id);
+
+        if (result.affected === 0) {
+            throw new NotFoundException('Todo not found');
+        }
+    }
 }
