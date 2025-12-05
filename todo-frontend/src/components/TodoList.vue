@@ -13,9 +13,10 @@ const emits = defineEmits<{
 </script>
 
 <template>
-  <div>
+  <div class="list-wrapper">
     <p v-if="!todos.length" class="empty-text">
-      No todos yet. Add one
+      <span class="empty-icon">📋</span>
+      <span>No tasks yet. Add one to get started!</span>
     </p>
 
     <ul v-else class="todo-list">
@@ -31,14 +32,43 @@ const emits = defineEmits<{
 </template>
 
 <style scoped>
+.list-wrapper {
+  padding: 1.5rem;
+}
+
 .empty-text {
   color: #6b7280;
-  font-size: 14px;
+  font-size: 1rem;
+  text-align: center;
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  display: block;
 }
 
 .todo-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .list-wrapper {
+    padding: 1rem;
+  }
+
+  .empty-text {
+    padding: 2rem 1rem;
+    font-size: 0.95rem;
+  }
 }
 </style>
