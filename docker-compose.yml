@@ -1,6 +1,35 @@
 version: '3.8'
 
 services:
+  backend:
+    build:
+      context: ./todo-api
+      dockerfile: Dockerfile
+    container_name: todo_backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: todo_db
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./todo-frontend
+      dockerfile: Dockerfile
+    container_name: todo_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+
   postgres:
     image: postgres:16
     container_name: todo_postgres

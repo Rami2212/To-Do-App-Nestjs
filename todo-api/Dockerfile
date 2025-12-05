@@ -2,7 +2,7 @@ FROM oven/bun:latest AS builder
 
 WORKDIR /app
 
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 RUN bun install
 
 COPY . .
@@ -15,12 +15,11 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-COPY package.json bun.lockb ./
-
-RUN bun install --production
+COPY package.json package-lock.json* yarn.lock* ./
+RUN bun install --omit=dev
 
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 3000
 
-CMD ["bun", "run", "dist/main.js"]
+CMD ["node", "dist/main.js"]
